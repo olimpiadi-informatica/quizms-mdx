@@ -1,6 +1,6 @@
 {
   "name": "@olinfo/quizms-mdx",
-  "version": "3.0.0-beta.0",
+  "version": "3.0.0-beta.1",
   "type": "module",
   "author": "Alessandro Bortolin <bortolin.alessandro@outlook.it>",
   "license": "MIT",
@@ -18,6 +18,9 @@
     "./vite": "./dist/vite.js"
   },
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@blockly/disable-top-blocks": "^0.5",
     "@mdx-js/mdx": "^3.1",
