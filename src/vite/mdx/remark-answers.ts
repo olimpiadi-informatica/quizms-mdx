@@ -1,5 +1,3 @@
-import process from "node:process";
-
 import { Parser } from "acorn";
 import type { Directive } from "estree";
 import type { Blockquote, List, Paragraph, Parent, Root } from "mdast";
@@ -27,15 +25,24 @@ function parseMultipleAnswerGroup(tree: Root) {
       type: "mdxJsxFlowElement",
       name: "AnswerGroup",
       attributes: [],
-      children: list.children.map((child): MdxJsxFlowElement => {
-        const attr = jsxAttribute("correct", child.checked);
-        return {
+      children: [
+        {
           type: "mdxJsxFlowElement",
-          name: "Answer",
-          attributes: [attr],
-          children: child.children,
-        } as MdxJsxFlowElement;
-      }),
+          name: "MultipleChoiceAnswer",
+          attributes: [],
+          children: list.children.map((child, i): MdxJsxFlowElement => {
+            return {
+              type: "mdxJsxFlowElement",
+              name: "Answer",
+              attributes: [
+                jsxAttribute("id", String.fromCharCode(65 + i)),
+                jsxAttribute("correct", child.checked),
+              ],
+              children: child.children,
+            } as MdxJsxFlowElement;
+          }),
+        } as MdxJsxFlowElement,
+      ],
     } as MdxJsxFlowElement;
   });
 }
@@ -65,10 +72,7 @@ function parseOpenAnswerGroup(tree: Root) {
       sourceType: "module",
     });
 
-    const attributes = [
-      jsxAttribute("type", "text"),
-      jsxAttribute("correct", (template.body[0] as Directive).expression),
-    ];
+    const attributes = [jsxAttribute("correct", (template.body[0] as Directive).expression)];
 
     parent!.children[index!] = {
       type: "mdxJsxFlowElement",
@@ -88,15 +92,11 @@ function parseOpenAnswerGroup(tree: Root) {
 
 function parseExplanation(tree: Root) {
   visit(tree, "blockquote", (blockquote: Blockquote, index, parent) => {
-    if (process.env.QUIZMS_MODE === "development" || process.env.QUIZMS_MODE === "training") {
-      parent!.children[index!] = {
-        type: "mdxJsxFlowElement",
-        name: "Explanation",
-        attributes: [],
-        children: blockquote.children,
-      } as MdxJsxFlowElement;
-    } else {
-      parent!.children.splice(index!, 1);
-    }
+    parent!.children[index!] = {
+      type: "mdxJsxFlowElement",
+      name: "Explanation",
+      attributes: [],
+      children: blockquote.children,
+    } as MdxJsxFlowElement;
   });
 }

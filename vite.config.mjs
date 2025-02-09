@@ -20,6 +20,7 @@ export default defineConfig({
       external: /^@olinfo\/quizms\/.*/,
       output: {
         preserveModules: true,
+        hoistTransitiveImports: false,
       },
     },
   },

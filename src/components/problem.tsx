@@ -1,50 +1,34 @@
-import { type ReactNode, createContext, useContext } from "react";
-
-type ProblemProps = {
-  id: number;
-  points: [number, number, number];
-  children: ReactNode;
-};
-
-type ProblemContextProps = {
-  id?: string | number;
-  points: [number, number, number];
-};
-
-const ProblemContext = createContext<ProblemContextProps>({
-  id: undefined,
-  points: [0, 0, 0],
-});
-ProblemContext.displayName = "ProblemContext";
+import {
+  ProblemClient,
+  type ProblemProps,
+  SubProblemClient,
+  type SubProblemProps,
+} from "./client/problem";
+import { JsonArray, JsonField, JsonObject } from "./json";
 
 export function Problem({ id, points, children }: ProblemProps) {
   return (
-    <ProblemContext.Provider value={{ id, points }}>
-      <div className="relative">{children}</div>
-      <hr className="last:hidden" />
-    </ProblemContext.Provider>
+    <JsonObject>
+      <JsonField field="id" value={id.toString()} />
+      <JsonField field="pointsCorrect" value={points[0]} />
+      <JsonField field="pointsBlank" value={points[1]} />
+      <JsonField field="pointsWrong" value={points[2]} />
+      <JsonField field="subProblems">
+        <JsonArray>
+          <ProblemClient id={id} points={points}>
+            {children}
+          </ProblemClient>
+        </JsonArray>
+      </JsonField>
+    </JsonObject>
   );
 }
-
-type SubProblemProps = {
-  subId: number;
-  children: ReactNode;
-};
 
 export function SubProblem({ subId, children }: SubProblemProps) {
-  const { id, points } = useContext(ProblemContext);
-  const newId = subId ? `${id}.${subId}` : `${id}`;
-
   return (
-    <ProblemContext.Provider value={{ id: newId, points }}>
-      <div className="break-inside-avoid">
-        <h3>Domanda {newId}</h3>
-        {children}
-      </div>
-    </ProblemContext.Provider>
+    <JsonObject>
+      {subId && <JsonField field="id" value={subId.toString()} />}
+      <SubProblemClient subId={subId}>{children}</SubProblemClient>
+    </JsonObject>
   );
-}
-
-export function useProblem() {
-  return useContext(ProblemContext);
 }

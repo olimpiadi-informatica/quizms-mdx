@@ -1,3 +1,5 @@
+"use client";
+
 import {
   type ComponentType,
   type Ref,
@@ -25,8 +27,8 @@ import {
   TriangleAlert,
 } from "lucide-react";
 
-import { useContest } from "~/components/contest";
-import { useProblem } from "~/components/problem";
+import { useContest } from "~/components/client/contest";
+import { useProblem } from "~/components/client/problem";
 
 import Debug from "./debug";
 import { defaultInitialBlocks, defaultToolbox } from "./default-blocks";
@@ -42,7 +44,7 @@ type VisualizerProps = {
   message?: string;
 };
 
-type BlocklyProps = {
+export type BlocklyProps = {
   toolbox?: ToolboxInfo;
   initialBlocks?: object;
   testcases: object[];
@@ -61,7 +63,7 @@ type TestcaseStatus = {
   msg?: string;
 };
 
-export function Blockly({
+export function BlocklyClient({
   toolbox,
   initialBlocks,
   testcases,
@@ -78,10 +80,12 @@ export function Blockly({
     for (let i = 0; i < testcases.length; i++) {
       registerProblem(`${id}.${i + 1}`, {
         type: "text",
-        pointsCorrect: points[0],
-        pointsBlank: points[1],
-        pointsWrong: points[2],
-        optionsCorrect: ["✅"],
+        maxPoints: points[0],
+        options: [
+          { value: "✅", points: points[0] },
+          { value: null, points: points[1] },
+          { value: "❌", points: points[2] },
+        ],
       });
     }
   }, [registerProblem, id, testcases, points]);

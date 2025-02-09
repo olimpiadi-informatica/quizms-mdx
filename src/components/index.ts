@@ -1,11 +1,8 @@
-"use client";
-
-import { Code } from "@olinfo/react-components";
-
-import { Answer, AnswerGroup, Explanation, OpenAnswer } from "./answers";
-import { Blockly } from "./blockly/workspace";
+import { Answer, AnswerGroup, Explanation, MultipleChoiceAnswer, OpenAnswer } from "./answers";
+import { Blockly } from "./blockly";
+import { Code } from "./client/code";
+import { Equation } from "./client/equation";
 import { Contest } from "./contest";
-import { Equation } from "./equation";
 import { Image } from "./image";
 import { Problem, SubProblem } from "./problem";
 import { Section } from "./section";
@@ -20,6 +17,7 @@ export function useMDXComponents() {
     Equation,
     Explanation,
     Image,
+    MultipleChoiceAnswer,
     OpenAnswer,
     Problem,
     Section,
