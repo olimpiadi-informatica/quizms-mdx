@@ -1,6 +1,6 @@
 {
   "name": "@olinfo/quizms-mdx",
-  "version": "3.0.0-beta.4",
+  "version": "3.0.0-beta.5",
   "type": "module",
   "author": "Alessandro Bortolin <bortolin.alessandro@outlook.it>",
   "license": "MIT",
@@ -55,8 +55,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8",
-    "@olinfo/tailwind": "^0.1",
     "@olinfo/quizms": "^3.0.0-beta.0",
+    "@olinfo/tailwind": "^0.1",
     "@types/file-saver": "^2.0",
     "@types/katex": "^0.16",
     "@types/lodash-es": "^4.17",
