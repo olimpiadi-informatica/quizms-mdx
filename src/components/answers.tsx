@@ -49,7 +49,7 @@ export function Answer({ id, correct, children }: AnswerProps) {
     <JsonObject>
       <JsonField field="value" value={id} />
       <JsonField field="correct" value={!!correct} />
-      <AnswerClient id={id} correct={correct}>
+      <AnswerClient id={id} correct={process.env.QUIZMS_MODE === "contest" ? correct : undefined}>
         {children}
       </AnswerClient>
     </JsonObject>
