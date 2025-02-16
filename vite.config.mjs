@@ -24,5 +24,10 @@ export default defineConfig({
       },
     },
   },
-  plugins: [dts({ rollupTypes: true }), nodeExternals(), preserveDirectives(), tsconfigPaths()],
+  plugins: [
+    dts({ rollupTypes: true }),
+    nodeExternals({ include: "tempy" }),
+    preserveDirectives(),
+    tsconfigPaths(),
+  ],
 });
