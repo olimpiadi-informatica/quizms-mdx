@@ -6,7 +6,7 @@ export function Blockly(props: BlocklyProps) {
     <>
       {props.testcases.map((_, i) => (
         <>
-          {i !== 0 && <Token value="{" />}
+          {i != 0 && <Token value="},{" />}
           <JsonField field="id" value={i + 1} />
           <JsonField field="type" value="text" />
           <JsonField field="options">
@@ -21,7 +21,6 @@ export function Blockly(props: BlocklyProps) {
               </JsonObject>
             </JsonArray>
           </JsonField>
-          i !== props.testcases.length - 1 && <Token value="}," />
         </>
       ))}
       <BlocklyClient {...props} />
