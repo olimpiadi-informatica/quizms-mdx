@@ -36,7 +36,7 @@ export function JsonArray({ children }: { children: ReactNode }) {
   );
 }
 
-function Token({ value }: { value: string }) {
+export function Token({ value }: { value: string }) {
   console.log(value);
   return null;
 }
